@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButtonBasket->setEnabled(false);
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
+    connect(ui->leaveButton, SIGNAL(triggered()), qApp, SLOT(quit()));
     timer->start(60000);
 
 }
@@ -197,6 +198,7 @@ void MainWindow::on_pushButtonBasket_clicked()
     connect(basket, SIGNAL(sendToWidget(QString, QString, QString, QString, QString, QString)),
             this, SLOT(addBayer(QString, QString, QString, QString, QString, QString)));
     if (basket->exec() == QDialog::Accepted) {
+
     }
 }
 
@@ -215,6 +217,7 @@ void MainWindow::addBayer(QString summ, QString number, QString Surname, QString
         ui->statusBar->showMessage("Can't insert new order to database", 3000);
         return;
     }
+    QMessageBox::information(this, "Статус заказа", "Ваш заказ принят и находится в статусе сборки", QMessageBox::Ok);
     result.clear();
     ui->pushButtonBasket->setEnabled(false);
 }
@@ -237,3 +240,4 @@ void MainWindow::on_lineEditSearch_returnPressed()
         }
     }
 }
+
